@@ -1,0 +1,13 @@
+{
+  "name": "qa-docker-lab",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Docker practice lab for running Playwright API tests in containers",
+  "scripts": {
+    "test": "playwright test",
+    "test:report": "playwright show-report"
+  },
+  "devDependencies": {
+    "@playwright/test": "1.60.0"
+  }
+}
