@@ -36,6 +36,15 @@ On Linux, macOS, Git Bash, or WSL, both commands can be run with:
 sh scripts/run-tests.sh
 ```
 
+On Windows PowerShell, use:
+
+```powershell
+powershell -NoProfile -ExecutionPolicy Bypass -File scripts/run-tests.ps1
+```
+
+Both helper scripts return the Playwright test exit code and clean up the
+Compose containers and network after the run.
+
 The generated HTML report is saved in `playwright-report/`.
 
 ## Run tests locally
@@ -75,6 +84,7 @@ npm test
 |   |-- Dockerfile
 |   `-- server.js
 |-- scripts/
+|   |-- run-tests.ps1
 |   `-- run-tests.sh
 |-- tests/
 |   `-- api.spec.js
