@@ -1,11 +1,12 @@
 const http = require('node:http');
 
 const port = Number(process.env.PORT || 3000);
+const serviceName = process.env.SERVICE_NAME || 'demo-api';
 
 const routes = {
   '/health': {
     status: 'ok',
-    service: 'demo-api',
+    service: serviceName,
   },
   '/users/1': {
     id: 1,

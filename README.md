@@ -47,6 +47,38 @@ Compose containers and network after the run.
 
 The generated HTML report is saved in `playwright-report/`.
 
+## Configure the test environment
+
+Compose uses sensible defaults, so no configuration file is required. To
+practice environment-based configuration, create a local `.env` file from the
+included example:
+
+```bash
+cp .env.example .env
+```
+
+PowerShell:
+
+```powershell
+Copy-Item .env.example .env
+```
+
+Available values:
+
+| Variable | Default | Purpose |
+| --- | --- | --- |
+| `API_PORT` | `3000` | Internal API port used by the service and tests |
+| `SERVICE_NAME` | `demo-api` | Service name returned by the health endpoint |
+
+For example:
+
+```dotenv
+API_PORT=3100
+SERVICE_NAME=qa-lab-api
+```
+
+The `.env` file is ignored by Git and excluded from the Docker build context.
+
 ## Run tests locally
 
 Start the API:
@@ -80,6 +112,7 @@ npm test
 
 ```text
 .
+|-- .env.example
 |-- api/
 |   |-- Dockerfile
 |   `-- server.js

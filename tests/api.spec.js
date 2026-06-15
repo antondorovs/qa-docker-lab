@@ -1,12 +1,14 @@
 const { test, expect } = require('@playwright/test');
 
+const expectedServiceName = process.env.EXPECTED_SERVICE_NAME || 'demo-api';
+
 test('health endpoint reports that the API is ready', async ({ request }) => {
   const response = await request.get('/health');
 
   expect(response.ok()).toBeTruthy();
   expect(await response.json()).toEqual({
     status: 'ok',
-    service: 'demo-api',
+    service: expectedServiceName,
   });
 });
 
