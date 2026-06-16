@@ -79,6 +79,34 @@ SERVICE_NAME=qa-lab-api
 
 The `.env` file is ignored by Git and excluded from the Docker build context.
 
+## Debug the API container
+
+The normal test workflow keeps the API inside the Compose network. When you
+want to inspect it from the host machine, add the debug override:
+
+```bash
+docker compose -f compose.yaml -f compose.debug.yaml up --build api
+```
+
+Then check the health endpoint from another terminal:
+
+```bash
+curl http://127.0.0.1:3000/health
+```
+
+PowerShell:
+
+```powershell
+Invoke-RestMethod http://127.0.0.1:3000/health
+```
+
+If you changed `API_PORT` in `.env`, use that port in the URL. Clean up after
+manual checks with:
+
+```bash
+docker compose -f compose.yaml -f compose.debug.yaml down --remove-orphans
+```
+
 ## Run tests locally
 
 Start the API:
@@ -122,6 +150,7 @@ npm test
 |-- tests/
 |   `-- api.spec.js
 |-- compose.yaml
+|-- compose.debug.yaml
 |-- Dockerfile
 |-- package.json
 `-- playwright.config.js
