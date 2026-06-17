@@ -45,7 +45,8 @@ powershell -NoProfile -ExecutionPolicy Bypass -File scripts/run-tests.ps1
 Both helper scripts return the Playwright test exit code and clean up the
 Compose containers and network after the run.
 
-The generated HTML report is saved in `playwright-report/`.
+The generated HTML report is saved in `playwright-report/`. A JUnit XML report
+for CI systems is saved as `test-results/junit.xml`.
 
 ## Configure the test environment
 
@@ -174,4 +175,16 @@ View service logs:
 
 ```bash
 docker compose logs api
+```
+
+Inspect the generated JUnit report:
+
+```bash
+cat test-results/junit.xml
+```
+
+PowerShell:
+
+```powershell
+Get-Content test-results/junit.xml
 ```

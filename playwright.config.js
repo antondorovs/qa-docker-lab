@@ -4,7 +4,11 @@ module.exports = defineConfig({
   testDir: './tests',
   fullyParallel: true,
   retries: process.env.CI ? 2 : 0,
-  reporter: [['list'], ['html', { open: 'never' }]],
+  reporter: [
+    ['list'],
+    ['html', { open: 'never' }],
+    ['junit', { outputFile: 'test-results/junit.xml' }],
+  ],
   use: {
     baseURL: process.env.BASE_URL || 'http://127.0.0.1:3000',
     extraHTTPHeaders: {
