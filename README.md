@@ -45,6 +45,9 @@ powershell -NoProfile -ExecutionPolicy Bypass -File scripts/run-tests.ps1
 Both helper scripts return the Playwright test exit code and clean up the
 Compose containers and network after the run.
 
+The API image includes a Dockerfile `HEALTHCHECK`, so Compose waits until the
+API is healthy before starting the test container.
+
 The generated HTML report is saved in `playwright-report/`. A JUnit XML report
 for CI systems is saved as `test-results/junit.xml`.
 
