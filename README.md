@@ -48,6 +48,10 @@ Compose containers and network after the run.
 The API image includes a Dockerfile `HEALTHCHECK`, so Compose waits until the
 API is healthy before starting the test container.
 
+Both Docker build contexts are intentionally small. The test image excludes
+source files that it does not copy, and the API image uses its own
+`api/.dockerignore` file.
+
 The generated HTML report is saved in `playwright-report/`. A JUnit XML report
 for CI systems is saved as `test-results/junit.xml`.
 
@@ -146,6 +150,7 @@ npm test
 .
 |-- .env.example
 |-- api/
+|   |-- .dockerignore
 |   |-- Dockerfile
 |   `-- server.js
 |-- scripts/

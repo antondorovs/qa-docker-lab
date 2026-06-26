@@ -1,6 +1,13 @@
 .git
 .gitignore
+.dockerignore
 .env
+.env.example
+README.md
+api
+compose.yaml
+compose.debug.yaml
 node_modules
 playwright-report
+scripts
 test-results
