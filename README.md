@@ -61,6 +61,9 @@ powershell -NoProfile -ExecutionPolicy Bypass -File scripts/validate-compose.ps1
 The API image includes a Dockerfile `HEALTHCHECK`, so Compose waits until the
 API is healthy before starting the test container.
 
+When Compose stops the API, the Node.js process handles `SIGTERM`, closes the
+HTTP server, and has a 10-second grace period before Docker forces shutdown.
+
 Both Docker build contexts are intentionally small. The test image excludes
 source files that it does not copy, and the API image uses its own
 `api/.dockerignore` file.

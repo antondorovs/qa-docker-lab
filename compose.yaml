@@ -5,6 +5,7 @@ services:
     environment:
       PORT: ${API_PORT:-3000}
       SERVICE_NAME: ${SERVICE_NAME:-demo-api}
+    stop_grace_period: 10s
 
   tests:
     build:

@@ -29,3 +29,35 @@ const server = http.createServer((request, response) => {
 server.listen(port, '0.0.0.0', () => {
   console.log(`Demo API is listening on port ${port}`);
 });
+
+let isShuttingDown = false;
+
+function shutdown(signal) {
+  if (isShuttingDown) {
+    return;
+  }
+
+  isShuttingDown = true;
+  console.log(`Received ${signal}; closing HTTP server`);
+
+  const forceExit = setTimeout(() => {
+    console.error('HTTP server did not close in time');
+    process.exit(1);
+  }, 8000);
+  forceExit.unref();
+
+  server.close((error) => {
+    clearTimeout(forceExit);
+
+    if (error) {
+      console.error('Failed to close HTTP server', error);
+      process.exit(1);
+    }
+
+    console.log('HTTP server closed');
+    process.exit(0);
+  });
+}
+
+process.on('SIGTERM', () => shutdown('SIGTERM'));
+process.on('SIGINT', () => shutdown('SIGINT'));
