@@ -67,6 +67,9 @@ HTTP server, and has a 10-second grace period before Docker forces shutdown.
 The API process and its healthcheck run as the non-root `node` user included
 in the base image.
 
+Compose also gives the API a read-only root filesystem, prevents privilege
+escalation, and drops all Linux capabilities.
+
 Both Docker build contexts are intentionally small. The test image excludes
 source files that it does not copy, and the API image uses its own
 `api/.dockerignore` file.

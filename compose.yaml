@@ -5,6 +5,11 @@ services:
     environment:
       PORT: ${API_PORT:-3000}
       SERVICE_NAME: ${SERVICE_NAME:-demo-api}
+    read_only: true
+    security_opt:
+      - no-new-privileges:true
+    cap_drop:
+      - ALL
     stop_grace_period: 10s
 
   tests:
