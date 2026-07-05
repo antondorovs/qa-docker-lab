@@ -73,6 +73,9 @@ escalation, and drops all Linux capabilities.
 The API container is limited to 128 MiB of memory, half of one CPU, and 100
 processes so resource constraints can be practiced locally.
 
+Docker keeps up to three 1 MiB JSON log files for the API container, which
+prevents local practice runs from growing logs without a limit.
+
 Both Docker build contexts are intentionally small. The test image excludes
 source files that it does not copy, and the API image uses its own
 `api/.dockerignore` file.
