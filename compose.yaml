@@ -33,3 +33,7 @@ services:
     volumes:
       - ./playwright-report:/tests/playwright-report
       - ./test-results:/tests/test-results
+
+networks:
+  default:
+    internal: true
