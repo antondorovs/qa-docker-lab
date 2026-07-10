@@ -64,6 +64,9 @@ API is healthy before starting the test container.
 When Compose stops the API, the Node.js process handles `SIGTERM`, closes the
 HTTP server, and has a 10-second grace period before Docker forces shutdown.
 
+Both containers run with Docker's init process enabled, which keeps signal
+handling predictable and reaps child processes during local practice runs.
+
 The API process and its healthcheck run as the non-root `node` user included
 in the base image.
 

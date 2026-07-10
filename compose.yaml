@@ -1,5 +1,6 @@
 services:
   api:
+    init: true
     build:
       context: ./api
     environment:
@@ -21,6 +22,7 @@ services:
     stop_grace_period: 10s
 
   tests:
+    init: true
     build:
       context: .
     depends_on:
