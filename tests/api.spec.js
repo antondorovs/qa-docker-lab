@@ -6,6 +6,7 @@ test('health endpoint reports that the API is ready', async ({ request }) => {
   const response = await request.get('/health');
 
   expect(response.ok()).toBeTruthy();
+  expect(response.headers()['content-type']).toContain('application/json');
   expect(await response.json()).toEqual({
     status: 'ok',
     service: expectedServiceName,
