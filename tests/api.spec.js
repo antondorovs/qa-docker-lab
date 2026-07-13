@@ -17,6 +17,7 @@ test('returns a known test user', async ({ request }) => {
   const response = await request.get('/users/1');
 
   expect(response.status()).toBe(200);
+  expect(response.headers()['content-type']).toContain('application/json');
   expect(await response.json()).toEqual({
     id: 1,
     name: 'Ada Lovelace',
