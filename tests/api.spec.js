@@ -29,6 +29,7 @@ test('returns 404 for an unknown route', async ({ request }) => {
   const response = await request.get('/missing');
 
   expect(response.status()).toBe(404);
+  expect(response.headers()['content-type']).toContain('application/json');
   expect(await response.json()).toEqual({
     error: 'Not found',
   });
