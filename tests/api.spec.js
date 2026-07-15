@@ -2,11 +2,15 @@ const { test, expect } = require('@playwright/test');
 
 const expectedServiceName = process.env.EXPECTED_SERVICE_NAME || 'demo-api';
 
+function expectJsonResponse(response, status) {
+  expect(response.status()).toBe(status);
+  expect(response.headers()['content-type']).toContain('application/json');
+}
+
 test('health endpoint reports that the API is ready', async ({ request }) => {
   const response = await request.get('/health');
 
-  expect(response.ok()).toBeTruthy();
-  expect(response.headers()['content-type']).toContain('application/json');
+  expectJsonResponse(response, 200);
   expect(await response.json()).toEqual({
     status: 'ok',
     service: expectedServiceName,
@@ -16,8 +20,7 @@ test('health endpoint reports that the API is ready', async ({ request }) => {
 test('returns a known test user', async ({ request }) => {
   const response = await request.get('/users/1');
 
-  expect(response.status()).toBe(200);
-  expect(response.headers()['content-type']).toContain('application/json');
+  expectJsonResponse(response, 200);
   expect(await response.json()).toEqual({
     id: 1,
     name: 'Ada Lovelace',
@@ -28,8 +31,7 @@ test('returns a known test user', async ({ request }) => {
 test('returns 404 for an unknown route', async ({ request }) => {
   const response = await request.get('/missing');
 
-  expect(response.status()).toBe(404);
-  expect(response.headers()['content-type']).toContain('application/json');
+  expectJsonResponse(response, 404);
   expect(await response.json()).toEqual({
     error: 'Not found',
   });
