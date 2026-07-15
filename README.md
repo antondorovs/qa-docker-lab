@@ -90,6 +90,9 @@ source files that it does not copy, and the API image uses its own
 The generated HTML report is saved in `playwright-report/`. A JUnit XML report
 for CI systems is saved as `test-results/junit.xml`.
 
+Container and CI runs cap Playwright at two workers, keeping local resource
+usage predictable while still exercising parallel API checks.
+
 ## Configure the test environment
 
 Compose uses sensible defaults, so no configuration file is required. To
