@@ -93,6 +93,9 @@ for CI systems is saved as `test-results/junit.xml`.
 Container and CI runs cap Playwright at two workers, keeping local resource
 usage predictable while still exercising parallel API checks.
 
+They also fail fast if a focused test is left in place, which helps keep the
+container workflow representative before pushing changes.
+
 ## Configure the test environment
 
 Compose uses sensible defaults, so no configuration file is required. To
