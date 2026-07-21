@@ -96,6 +96,9 @@ usage predictable while still exercising parallel API checks.
 They also fail fast if a focused test is left in place, which helps keep the
 container workflow representative before pushing changes.
 
+After the first failed test, container and CI runs stop early so failures are
+reported quickly without spending time on the rest of the suite.
+
 ## Configure the test environment
 
 Compose uses sensible defaults, so no configuration file is required. To
