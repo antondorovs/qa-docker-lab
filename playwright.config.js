@@ -7,6 +7,9 @@ module.exports = defineConfig({
   maxFailures: process.env.CI ? 1 : undefined,
   retries: process.env.CI ? 2 : 0,
   workers: process.env.CI ? 2 : undefined,
+  expect: {
+    timeout: 5000,
+  },
   reporter: [
     ['list'],
     ['html', { open: 'never' }],

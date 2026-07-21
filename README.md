@@ -99,6 +99,9 @@ container workflow representative before pushing changes.
 After the first failed test, container and CI runs stop early so failures are
 reported quickly without spending time on the rest of the suite.
 
+Assertions use a five-second timeout, keeping delayed API responses visible
+without making successful checks wait longer than needed.
+
 ## Configure the test environment
 
 Compose uses sensible defaults, so no configuration file is required. To
