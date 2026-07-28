@@ -105,6 +105,9 @@ without making successful checks wait longer than needed.
 When a container or CI retry is needed, Playwright records a trace on the
 first retry to make the failure easier to inspect afterward.
 
+Screenshots are captured only on failed checks, keeping successful runs clean
+while preserving useful evidence when something breaks.
+
 ## Configure the test environment
 
 Compose uses sensible defaults, so no configuration file is required. To
