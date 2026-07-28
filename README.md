@@ -102,6 +102,9 @@ reported quickly without spending time on the rest of the suite.
 Assertions use a five-second timeout, keeping delayed API responses visible
 without making successful checks wait longer than needed.
 
+When a container or CI retry is needed, Playwright records a trace on the
+first retry to make the failure easier to inspect afterward.
+
 ## Configure the test environment
 
 Compose uses sensible defaults, so no configuration file is required. To

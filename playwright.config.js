@@ -17,6 +17,7 @@ module.exports = defineConfig({
   ],
   use: {
     baseURL: process.env.BASE_URL || 'http://127.0.0.1:3000',
+    trace: process.env.CI ? 'on-first-retry' : 'off',
     extraHTTPHeaders: {
       Accept: 'application/json',
     },
