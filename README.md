@@ -108,6 +108,9 @@ first retry to make the failure easier to inspect afterward.
 Screenshots are captured only on failed checks, keeping successful runs clean
 while preserving useful evidence when something breaks.
 
+Failure videos are retained as well, giving another lightweight artifact for
+debugging without adding noise to passing runs.
+
 ## Configure the test environment
 
 Compose uses sensible defaults, so no configuration file is required. To

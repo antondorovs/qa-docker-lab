@@ -19,6 +19,7 @@ module.exports = defineConfig({
     baseURL: process.env.BASE_URL || 'http://127.0.0.1:3000',
     screenshot: 'only-on-failure',
     trace: process.env.CI ? 'on-first-retry' : 'off',
+    video: 'retain-on-failure',
     extraHTTPHeaders: {
       Accept: 'application/json',
     },
