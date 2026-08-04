@@ -111,6 +111,9 @@ while preserving useful evidence when something breaks.
 Failure videos are retained as well, giving another lightweight artifact for
 debugging without adding noise to passing runs.
 
+Failure artifacts are written under `test-results/artifacts/`, keeping them
+next to the JUnit report while staying ignored by Git.
+
 ## Configure the test environment
 
 Compose uses sensible defaults, so no configuration file is required. To
