@@ -45,6 +45,9 @@ powershell -NoProfile -ExecutionPolicy Bypass -File scripts/run-tests.ps1
 Both helper scripts return the Playwright test exit code and clean up the
 Compose containers and network after the run.
 
+The Compose project name is fixed to `qa-docker-lab`, keeping container,
+image, and network names predictable across shells and launch directories.
+
 Validate both the standard Compose configuration and the debug override
 without starting containers:
 

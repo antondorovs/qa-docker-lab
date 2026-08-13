@@ -1,3 +1,5 @@
+name: qa-docker-lab
+
 services:
   api:
     init: true
