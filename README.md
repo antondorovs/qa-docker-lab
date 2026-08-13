@@ -76,6 +76,9 @@ handling predictable and reaps child processes during local practice runs.
 The API process and its healthcheck run as the non-root `node` user included
 in the base image.
 
+The API container sets `NODE_ENV=production`, matching the runtime mode used
+by most deployed Node.js services.
+
 Compose also gives the API a read-only root filesystem, prevents privilege
 escalation, and drops all Linux capabilities.
 
