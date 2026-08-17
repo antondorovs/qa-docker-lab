@@ -91,6 +91,9 @@ processes so resource constraints can be practiced locally.
 Docker keeps up to three 1 MiB JSON log files per Compose service, which
 prevents local practice runs from growing logs without a limit.
 
+The test container is also capped at 200 processes, limiting runaway process
+trees while leaving room for parallel Playwright workers.
+
 The normal test workflow uses an internal Compose network with no external
 route. The debug override switches back to a regular network and publishes
 the API port for host access.
