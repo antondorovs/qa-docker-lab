@@ -70,6 +70,9 @@ keeps slower local Docker starts from failing early.
 When Compose stops the API, the Node.js process handles `SIGTERM`, closes the
 HTTP server, and has a 10-second grace period before Docker forces shutdown.
 
+Compose sends `SIGTERM` explicitly to the API container, keeping the shutdown
+path easy to reason about during local experiments.
+
 Both containers run with Docker's init process enabled, which keeps signal
 handling predictable and reaps child processes during local practice runs.
 
