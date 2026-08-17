@@ -39,6 +39,11 @@ services:
     volumes:
       - ./playwright-report:/tests/playwright-report
       - ./test-results:/tests/test-results
+    logging:
+      driver: json-file
+      options:
+        max-size: "1m"
+        max-file: "3"
 
 networks:
   default:

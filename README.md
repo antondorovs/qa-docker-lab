@@ -88,7 +88,7 @@ escalation, and drops all Linux capabilities.
 The API container is limited to 128 MiB of memory, half of one CPU, and 100
 processes so resource constraints can be practiced locally.
 
-Docker keeps up to three 1 MiB JSON log files for the API container, which
+Docker keeps up to three 1 MiB JSON log files per Compose service, which
 prevents local practice runs from growing logs without a limit.
 
 The normal test workflow uses an internal Compose network with no external
