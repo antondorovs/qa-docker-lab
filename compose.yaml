@@ -37,6 +37,7 @@ services:
       CI: "true"
       EXPECTED_SERVICE_NAME: ${SERVICE_NAME:-demo-api}
     mem_limit: 1g
+    cpus: 1.00
     pids_limit: 200
     volumes:
       - ./playwright-report:/tests/playwright-report

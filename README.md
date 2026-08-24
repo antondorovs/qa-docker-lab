@@ -97,6 +97,9 @@ trees while leaving room for parallel Playwright workers.
 The test container has a 1 GiB memory limit, which keeps local runs bounded
 without constraining the small API checks.
 
+The test container is capped at one CPU, keeping browser checks predictable
+on shared local machines.
+
 The test container uses the same explicit `SIGTERM` and 10-second stop grace
 period as the API, so interrupted runs shut down predictably.
 
