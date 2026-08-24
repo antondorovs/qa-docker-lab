@@ -94,6 +94,9 @@ prevents local practice runs from growing logs without a limit.
 The test container is also capped at 200 processes, limiting runaway process
 trees while leaving room for parallel Playwright workers.
 
+The test container has a 1 GiB memory limit, which keeps local runs bounded
+without constraining the small API checks.
+
 The test container uses the same explicit `SIGTERM` and 10-second stop grace
 period as the API, so interrupted runs shut down predictably.
 
