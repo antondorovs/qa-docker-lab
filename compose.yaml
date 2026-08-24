@@ -45,6 +45,8 @@ services:
       options:
         max-size: "1m"
         max-file: "3"
+    stop_signal: SIGTERM
+    stop_grace_period: 10s
 
 networks:
   default:

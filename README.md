@@ -94,6 +94,9 @@ prevents local practice runs from growing logs without a limit.
 The test container is also capped at 200 processes, limiting runaway process
 trees while leaving room for parallel Playwright workers.
 
+The test container uses the same explicit `SIGTERM` and 10-second stop grace
+period as the API, so interrupted runs shut down predictably.
+
 The normal test workflow uses an internal Compose network with no external
 route. The debug override switches back to a regular network and publishes
 the API port for host access.
