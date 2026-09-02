@@ -129,6 +129,9 @@ without making successful checks wait longer than needed.
 Every API response disables caching and MIME sniffing, keeping the lab's JSON
 behavior explicit in both successful and error responses.
 
+The sample API accepts only `GET` requests. Other methods return `405 Method
+Not Allowed` and advertise `GET` in the `Allow` response header.
+
 When a container or CI retry is needed, Playwright records a trace on the
 first retry to make the failure easier to inspect afterward.
 

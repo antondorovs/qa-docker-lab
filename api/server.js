@@ -16,11 +16,15 @@ const routes = {
 };
 
 const server = http.createServer((request, response) => {
-  const body = routes[request.url];
-  const statusCode = body ? 200 : 404;
-  const payload = body || { error: 'Not found' };
+  const methodAllowed = request.method === 'GET';
+  const body = methodAllowed ? routes[request.url] : undefined;
+  const statusCode = methodAllowed ? (body ? 200 : 404) : 405;
+  const payload = body || {
+    error: methodAllowed ? 'Not found' : 'Method not allowed',
+  };
 
   response.writeHead(statusCode, {
+    ...(methodAllowed ? {} : { Allow: 'GET' }),
     'Cache-Control': 'no-store',
     'Content-Type': 'application/json',
     'X-Content-Type-Options': 'nosniff',

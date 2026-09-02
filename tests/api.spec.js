@@ -38,3 +38,13 @@ test('returns 404 for an unknown route', async ({ request }) => {
     error: 'Not found',
   });
 });
+
+test('rejects unsupported HTTP methods', async ({ request }) => {
+  const response = await request.post('/health');
+
+  expectJsonResponse(response, 405);
+  expect(response.headers().allow).toBe('GET');
+  expect(await response.json()).toEqual({
+    error: 'Method not allowed',
+  });
+});
