@@ -21,7 +21,9 @@ const server = http.createServer((request, response) => {
   const payload = body || { error: 'Not found' };
 
   response.writeHead(statusCode, {
+    'Cache-Control': 'no-store',
     'Content-Type': 'application/json',
+    'X-Content-Type-Options': 'nosniff',
   });
   response.end(JSON.stringify(payload));
 });

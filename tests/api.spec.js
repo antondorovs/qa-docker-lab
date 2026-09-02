@@ -4,7 +4,9 @@ const expectedServiceName = process.env.EXPECTED_SERVICE_NAME || 'demo-api';
 
 function expectJsonResponse(response, status) {
   expect(response.status()).toBe(status);
+  expect(response.headers()['cache-control']).toBe('no-store');
   expect(response.headers()['content-type']).toContain('application/json');
+  expect(response.headers()['x-content-type-options']).toBe('nosniff');
 }
 
 test('health endpoint reports that the API is ready', async ({ request }) => {
