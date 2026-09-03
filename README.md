@@ -7,7 +7,7 @@ The first example starts:
 
 - a small Node.js API container;
 - a Playwright test container;
-- three API checks against the service over the Compose network.
+- four API checks against the service over the Compose network.
 
 ## Prerequisites
 
@@ -131,6 +131,9 @@ behavior explicit in both successful and error responses.
 
 The sample API accepts only `GET` requests. Other methods return `405 Method
 Not Allowed` and advertise `GET` in the `Allow` response header.
+
+Route matching uses the request path, so query parameters do not change which
+sample endpoint handles a request.
 
 When a container or CI retry is needed, Playwright records a trace on the
 first retry to make the failure easier to inspect afterward.

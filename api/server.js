@@ -17,7 +17,8 @@ const routes = {
 
 const server = http.createServer((request, response) => {
   const methodAllowed = request.method === 'GET';
-  const body = methodAllowed ? routes[request.url] : undefined;
+  const { pathname } = new URL(request.url, 'http://localhost');
+  const body = methodAllowed ? routes[pathname] : undefined;
   const statusCode = methodAllowed ? (body ? 200 : 404) : 405;
   const payload = body || {
     error: methodAllowed ? 'Not found' : 'Method not allowed',

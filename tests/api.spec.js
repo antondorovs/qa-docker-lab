@@ -10,7 +10,7 @@ function expectJsonResponse(response, status) {
 }
 
 test('health endpoint reports that the API is ready', async ({ request }) => {
-  const response = await request.get('/health');
+  const response = await request.get('/health?source=playwright');
 
   expectJsonResponse(response, 200);
   expect(await response.json()).toEqual({
