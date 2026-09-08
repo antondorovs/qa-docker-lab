@@ -16,7 +16,8 @@ const routes = {
 };
 
 const server = http.createServer((request, response) => {
-  const methodAllowed = request.method === 'GET';
+  const isHeadRequest = request.method === 'HEAD';
+  const methodAllowed = request.method === 'GET' || isHeadRequest;
   const { pathname } = new URL(request.url, 'http://localhost');
   const body = methodAllowed ? routes[pathname] : undefined;
   const statusCode = methodAllowed ? (body ? 200 : 404) : 405;
@@ -25,12 +26,12 @@ const server = http.createServer((request, response) => {
   };
 
   response.writeHead(statusCode, {
-    ...(methodAllowed ? {} : { Allow: 'GET' }),
+    ...(methodAllowed ? {} : { Allow: 'GET, HEAD' }),
     'Cache-Control': 'no-store',
     'Content-Type': 'application/json',
     'X-Content-Type-Options': 'nosniff',
   });
-  response.end(JSON.stringify(payload));
+  response.end(isHeadRequest ? undefined : JSON.stringify(payload));
 });
 
 server.listen(port, '0.0.0.0', () => {

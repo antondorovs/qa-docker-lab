@@ -30,6 +30,13 @@ test('returns a known test user', async ({ request }) => {
   });
 });
 
+test('supports HEAD without returning a response body', async ({ request }) => {
+  const response = await request.head('/health');
+
+  expectJsonResponse(response, 200);
+  expect(await response.text()).toBe('');
+});
+
 test('returns 404 for an unknown route', async ({ request }) => {
   const response = await request.get('/missing');
 
@@ -43,7 +50,7 @@ test('rejects unsupported HTTP methods', async ({ request }) => {
   const response = await request.post('/health');
 
   expectJsonResponse(response, 405);
-  expect(response.headers().allow).toBe('GET');
+  expect(response.headers().allow).toBe('GET, HEAD');
   expect(await response.json()).toEqual({
     error: 'Method not allowed',
   });

@@ -7,7 +7,7 @@ The first example starts:
 
 - a small Node.js API container;
 - a Playwright test container;
-- four API checks against the service over the Compose network.
+- five API checks against the service over the Compose network.
 
 ## Prerequisites
 
@@ -129,8 +129,9 @@ without making successful checks wait longer than needed.
 Every API response disables caching and MIME sniffing, keeping the lab's JSON
 behavior explicit in both successful and error responses.
 
-The sample API accepts only `GET` requests. Other methods return `405 Method
-Not Allowed` and advertise `GET` in the `Allow` response header.
+The sample API accepts `GET` and `HEAD` requests. A `HEAD` response has the
+same headers as `GET`, without a response body. Other methods return `405
+Method Not Allowed` and advertise the supported methods in the `Allow` header.
 
 Route matching uses the request path, so query parameters do not change which
 sample endpoint handles a request.
