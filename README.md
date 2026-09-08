@@ -7,7 +7,7 @@ The first example starts:
 
 - a small Node.js API container;
 - a Playwright test container;
-- five API checks against the service over the Compose network.
+- six API checks against the service over the Compose network.
 
 ## Prerequisites
 
@@ -128,6 +128,9 @@ without making successful checks wait longer than needed.
 
 Every API response disables caching and MIME sniffing, keeping the lab's JSON
 behavior explicit in both successful and error responses.
+
+Every response also includes a unique `X-Request-Id` UUID, making individual
+requests easy to correlate with diagnostics.
 
 The sample API accepts `GET` and `HEAD` requests. A `HEAD` response has the
 same headers as `GET`, without a response body. Other methods return `405

@@ -1,3 +1,4 @@
+const { randomUUID } = require('node:crypto');
 const http = require('node:http');
 
 const port = Number(process.env.PORT || 3000);
@@ -30,6 +31,7 @@ const server = http.createServer((request, response) => {
     'Cache-Control': 'no-store',
     'Content-Type': 'application/json',
     'X-Content-Type-Options': 'nosniff',
+    'X-Request-Id': randomUUID(),
   });
   response.end(isHeadRequest ? undefined : JSON.stringify(payload));
 });

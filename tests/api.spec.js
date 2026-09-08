@@ -7,6 +7,9 @@ function expectJsonResponse(response, status) {
   expect(response.headers()['cache-control']).toBe('no-store');
   expect(response.headers()['content-type']).toContain('application/json');
   expect(response.headers()['x-content-type-options']).toBe('nosniff');
+  expect(response.headers()['x-request-id']).toMatch(
+    /^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/,
+  );
 }
 
 test('health endpoint reports that the API is ready', async ({ request }) => {
@@ -35,6 +38,17 @@ test('supports HEAD without returning a response body', async ({ request }) => {
 
   expectJsonResponse(response, 200);
   expect(await response.text()).toBe('');
+});
+
+test('assigns a unique ID to each request', async ({ request }) => {
+  const firstResponse = await request.get('/health');
+  const secondResponse = await request.get('/health');
+
+  expectJsonResponse(firstResponse, 200);
+  expectJsonResponse(secondResponse, 200);
+  expect(firstResponse.headers()['x-request-id']).not.toBe(
+    secondResponse.headers()['x-request-id'],
+  );
 });
 
 test('returns 404 for an unknown route', async ({ request }) => {
