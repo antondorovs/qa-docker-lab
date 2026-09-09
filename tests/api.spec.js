@@ -6,6 +6,8 @@ function expectJsonResponse(response, status) {
   expect(response.status()).toBe(status);
   expect(response.headers()['cache-control']).toBe('no-store');
   expect(response.headers()['content-type']).toContain('application/json');
+  expect(response.headers()['referrer-policy']).toBe('no-referrer');
+  expect(response.headers()['x-frame-options']).toBe('DENY');
   expect(response.headers()['x-content-type-options']).toBe('nosniff');
   expect(response.headers()['x-request-id']).toMatch(
     /^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/,

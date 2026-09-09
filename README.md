@@ -129,6 +129,9 @@ without making successful checks wait longer than needed.
 Every API response disables caching and MIME sniffing, keeping the lab's JSON
 behavior explicit in both successful and error responses.
 
+Responses also prevent embedding in frames and suppress referrer data, keeping
+the sample API's browser-facing behavior restrictive by default.
+
 Every response also includes a unique `X-Request-Id` UUID, making individual
 requests easy to correlate with diagnostics.
 

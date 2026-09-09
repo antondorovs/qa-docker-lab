@@ -30,6 +30,8 @@ const server = http.createServer((request, response) => {
     ...(methodAllowed ? {} : { Allow: 'GET, HEAD' }),
     'Cache-Control': 'no-store',
     'Content-Type': 'application/json',
+    'Referrer-Policy': 'no-referrer',
+    'X-Frame-Options': 'DENY',
     'X-Content-Type-Options': 'nosniff',
     'X-Request-Id': randomUUID(),
   });
