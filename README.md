@@ -139,6 +139,10 @@ The sample API accepts `GET` and `HEAD` requests. A `HEAD` response has the
 same headers as `GET`, without a response body. Other methods return `405
 Method Not Allowed` and advertise the supported methods in the `Allow` header.
 
+JSON responses include an explicit byte-accurate `Content-Length`. For `HEAD`,
+the value describes the representation that the corresponding `GET` would
+return even though no body is sent.
+
 Route matching uses the request path, so query parameters do not change which
 sample endpoint handles a request.
 

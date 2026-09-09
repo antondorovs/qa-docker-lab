@@ -25,17 +25,19 @@ const server = http.createServer((request, response) => {
   const payload = body || {
     error: methodAllowed ? 'Not found' : 'Method not allowed',
   };
+  const responseBody = JSON.stringify(payload);
 
   response.writeHead(statusCode, {
     ...(methodAllowed ? {} : { Allow: 'GET, HEAD' }),
     'Cache-Control': 'no-store',
+    'Content-Length': Buffer.byteLength(responseBody),
     'Content-Type': 'application/json',
     'Referrer-Policy': 'no-referrer',
     'X-Frame-Options': 'DENY',
     'X-Content-Type-Options': 'nosniff',
     'X-Request-Id': randomUUID(),
   });
-  response.end(isHeadRequest ? undefined : JSON.stringify(payload));
+  response.end(isHeadRequest ? undefined : responseBody);
 });
 
 server.listen(port, '0.0.0.0', () => {

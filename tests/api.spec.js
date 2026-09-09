@@ -2,9 +2,12 @@ const { test, expect } = require('@playwright/test');
 
 const expectedServiceName = process.env.EXPECTED_SERVICE_NAME || 'demo-api';
 
-function expectJsonResponse(response, status) {
+function expectJsonResponse(response, status, expectedPayload) {
   expect(response.status()).toBe(status);
   expect(response.headers()['cache-control']).toBe('no-store');
+  expect(response.headers()['content-length']).toBe(
+    String(Buffer.byteLength(JSON.stringify(expectedPayload))),
+  );
   expect(response.headers()['content-type']).toContain('application/json');
   expect(response.headers()['referrer-policy']).toBe('no-referrer');
   expect(response.headers()['x-frame-options']).toBe('DENY');
@@ -16,38 +19,54 @@ function expectJsonResponse(response, status) {
 
 test('health endpoint reports that the API is ready', async ({ request }) => {
   const response = await request.get('/health?source=playwright');
-
-  expectJsonResponse(response, 200);
-  expect(await response.json()).toEqual({
+  const expectedPayload = {
     status: 'ok',
     service: expectedServiceName,
-  });
+  };
+
+  expectJsonResponse(response, 200, expectedPayload);
+  expect(await response.json()).toEqual(expectedPayload);
 });
 
 test('returns a known test user', async ({ request }) => {
   const response = await request.get('/users/1');
-
-  expectJsonResponse(response, 200);
-  expect(await response.json()).toEqual({
+  const expectedPayload = {
     id: 1,
     name: 'Ada Lovelace',
     role: 'QA Engineer',
-  });
+  };
+
+  expectJsonResponse(response, 200, expectedPayload);
+  expect(await response.json()).toEqual(expectedPayload);
 });
 
 test('supports HEAD without returning a response body', async ({ request }) => {
-  const response = await request.head('/health');
+  const getResponse = await request.get('/health');
+  const headResponse = await request.head('/health');
+  const expectedPayload = {
+    status: 'ok',
+    service: expectedServiceName,
+  };
 
-  expectJsonResponse(response, 200);
-  expect(await response.text()).toBe('');
+  expectJsonResponse(getResponse, 200, expectedPayload);
+  expectJsonResponse(headResponse, 200, expectedPayload);
+  expect(headResponse.headers()['content-length']).toBe(
+    getResponse.headers()['content-length'],
+  );
+  expect(await headResponse.text()).toBe('');
 });
 
 test('assigns a unique ID to each request', async ({ request }) => {
   const firstResponse = await request.get('/health');
   const secondResponse = await request.get('/health');
 
-  expectJsonResponse(firstResponse, 200);
-  expectJsonResponse(secondResponse, 200);
+  const expectedPayload = {
+    status: 'ok',
+    service: expectedServiceName,
+  };
+
+  expectJsonResponse(firstResponse, 200, expectedPayload);
+  expectJsonResponse(secondResponse, 200, expectedPayload);
   expect(firstResponse.headers()['x-request-id']).not.toBe(
     secondResponse.headers()['x-request-id'],
   );
@@ -55,19 +74,21 @@ test('assigns a unique ID to each request', async ({ request }) => {
 
 test('returns 404 for an unknown route', async ({ request }) => {
   const response = await request.get('/missing');
-
-  expectJsonResponse(response, 404);
-  expect(await response.json()).toEqual({
+  const expectedPayload = {
     error: 'Not found',
-  });
+  };
+
+  expectJsonResponse(response, 404, expectedPayload);
+  expect(await response.json()).toEqual(expectedPayload);
 });
 
 test('rejects unsupported HTTP methods', async ({ request }) => {
   const response = await request.post('/health');
-
-  expectJsonResponse(response, 405);
-  expect(response.headers().allow).toBe('GET, HEAD');
-  expect(await response.json()).toEqual({
+  const expectedPayload = {
     error: 'Method not allowed',
-  });
+  };
+
+  expectJsonResponse(response, 405, expectedPayload);
+  expect(response.headers().allow).toBe('GET, HEAD');
+  expect(await response.json()).toEqual(expectedPayload);
 });
