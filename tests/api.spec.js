@@ -8,7 +8,7 @@ function expectJsonResponse(response, status, expectedPayload) {
   expect(response.headers()['content-length']).toBe(
     String(Buffer.byteLength(JSON.stringify(expectedPayload))),
   );
-  expect(response.headers()['content-type']).toContain('application/json');
+  expect(response.headers()['content-type']).toBe('application/json; charset=utf-8');
   expect(response.headers()['referrer-policy']).toBe('no-referrer');
   expect(response.headers()['x-frame-options']).toBe('DENY');
   expect(response.headers()['x-content-type-options']).toBe('nosniff');

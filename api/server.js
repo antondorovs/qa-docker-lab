@@ -32,7 +32,7 @@ const server = http.createServer((request, response) => {
     ...(isOptionsRequest || !methodAllowed ? { Allow: 'GET, HEAD, OPTIONS' } : {}),
     'Cache-Control': 'no-store',
     'Content-Length': Buffer.byteLength(responseBody),
-    ...(payload ? { 'Content-Type': 'application/json' } : {}),
+    ...(payload ? { 'Content-Type': 'application/json; charset=utf-8' } : {}),
     'Referrer-Policy': 'no-referrer',
     'X-Frame-Options': 'DENY',
     'X-Content-Type-Options': 'nosniff',

@@ -144,6 +144,9 @@ JSON responses include an explicit byte-accurate `Content-Length`. For `HEAD`,
 the value describes the representation that the corresponding `GET` would
 return even though no body is sent.
 
+JSON response headers explicitly declare UTF-8, so clients can decode the API
+payload consistently.
+
 Route matching uses the request path, so query parameters do not change which
 sample endpoint handles a request.
 
