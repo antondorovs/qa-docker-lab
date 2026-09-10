@@ -56,6 +56,23 @@ test('supports HEAD without returning a response body', async ({ request }) => {
   expect(await headResponse.text()).toBe('');
 });
 
+test('advertises supported methods with OPTIONS', async ({ request }) => {
+  const response = await request.fetch('/health', { method: 'OPTIONS' });
+
+  expect(response.status()).toBe(204);
+  expect(response.headers()['allow']).toBe('GET, HEAD, OPTIONS');
+  expect(response.headers()['cache-control']).toBe('no-store');
+  expect(response.headers()['content-length']).toBe('0');
+  expect(response.headers()['content-type']).toBeUndefined();
+  expect(response.headers()['referrer-policy']).toBe('no-referrer');
+  expect(response.headers()['x-frame-options']).toBe('DENY');
+  expect(response.headers()['x-content-type-options']).toBe('nosniff');
+  expect(response.headers()['x-request-id']).toMatch(
+    /^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/,
+  );
+  expect(await response.text()).toBe('');
+});
+
 test('assigns a unique ID to each request', async ({ request }) => {
   const firstResponse = await request.get('/health');
   const secondResponse = await request.get('/health');
@@ -89,6 +106,6 @@ test('rejects unsupported HTTP methods', async ({ request }) => {
   };
 
   expectJsonResponse(response, 405, expectedPayload);
-  expect(response.headers().allow).toBe('GET, HEAD');
+  expect(response.headers().allow).toBe('GET, HEAD, OPTIONS');
   expect(await response.json()).toEqual(expectedPayload);
 });

@@ -7,7 +7,7 @@ The first example starts:
 
 - a small Node.js API container;
 - a Playwright test container;
-- six API checks against the service over the Compose network.
+- seven API checks against the service over the Compose network.
 
 ## Prerequisites
 
@@ -135,9 +135,10 @@ the sample API's browser-facing behavior restrictive by default.
 Every response also includes a unique `X-Request-Id` UUID, making individual
 requests easy to correlate with diagnostics.
 
-The sample API accepts `GET` and `HEAD` requests. A `HEAD` response has the
-same headers as `GET`, without a response body. Other methods return `405
-Method Not Allowed` and advertise the supported methods in the `Allow` header.
+The sample API accepts `GET`, `HEAD`, and `OPTIONS` requests. A `HEAD` response
+has the same headers as `GET`, without a response body. `OPTIONS` returns `204`
+for a known route and advertises the supported methods in the `Allow` header.
+Other methods return `405 Method Not Allowed` with the same header.
 
 JSON responses include an explicit byte-accurate `Content-Length`. For `HEAD`,
 the value describes the representation that the corresponding `GET` would

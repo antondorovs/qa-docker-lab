@@ -18,26 +18,27 @@ const routes = {
 
 const server = http.createServer((request, response) => {
   const isHeadRequest = request.method === 'HEAD';
-  const methodAllowed = request.method === 'GET' || isHeadRequest;
+  const isOptionsRequest = request.method === 'OPTIONS';
+  const methodAllowed = request.method === 'GET' || isHeadRequest || isOptionsRequest;
   const { pathname } = new URL(request.url, 'http://localhost');
   const body = methodAllowed ? routes[pathname] : undefined;
-  const statusCode = methodAllowed ? (body ? 200 : 404) : 405;
-  const payload = body || {
+  const statusCode = isOptionsRequest && body ? 204 : methodAllowed ? (body ? 200 : 404) : 405;
+  const payload = statusCode === 204 ? undefined : body || {
     error: methodAllowed ? 'Not found' : 'Method not allowed',
   };
-  const responseBody = JSON.stringify(payload);
+  const responseBody = payload ? JSON.stringify(payload) : '';
 
   response.writeHead(statusCode, {
-    ...(methodAllowed ? {} : { Allow: 'GET, HEAD' }),
+    ...(isOptionsRequest || !methodAllowed ? { Allow: 'GET, HEAD, OPTIONS' } : {}),
     'Cache-Control': 'no-store',
     'Content-Length': Buffer.byteLength(responseBody),
-    'Content-Type': 'application/json',
+    ...(payload ? { 'Content-Type': 'application/json' } : {}),
     'Referrer-Policy': 'no-referrer',
     'X-Frame-Options': 'DENY',
     'X-Content-Type-Options': 'nosniff',
     'X-Request-Id': randomUUID(),
   });
-  response.end(isHeadRequest ? undefined : responseBody);
+  response.end(isHeadRequest || isOptionsRequest ? undefined : responseBody);
 });
 
 server.listen(port, '0.0.0.0', () => {
