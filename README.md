@@ -135,6 +135,9 @@ the sample API's browser-facing behavior restrictive by default.
 Every response also includes a unique `X-Request-Id` UUID, making individual
 requests easy to correlate with diagnostics.
 
+Every response also includes `X-Service-Name`, which keeps test output and
+manual checks tied to the configured API service name.
+
 The sample API accepts `GET`, `HEAD`, and `OPTIONS` requests. A `HEAD` response
 has the same headers as `GET`, without a response body. `OPTIONS` returns `204`
 for a known route and advertises the supported methods in the `Allow` header.

@@ -37,6 +37,7 @@ const server = http.createServer((request, response) => {
     'X-Frame-Options': 'DENY',
     'X-Content-Type-Options': 'nosniff',
     'X-Request-Id': randomUUID(),
+    'X-Service-Name': serviceName,
   });
   response.end(isHeadRequest || isOptionsRequest ? undefined : responseBody);
 });

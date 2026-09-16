@@ -15,6 +15,7 @@ function expectJsonResponse(response, status, expectedPayload) {
   expect(response.headers()['x-request-id']).toMatch(
     /^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/,
   );
+  expect(response.headers()['x-service-name']).toBe(expectedServiceName);
 }
 
 test('health endpoint reports that the API is ready', async ({ request }) => {
@@ -70,6 +71,7 @@ test('advertises supported methods with OPTIONS', async ({ request }) => {
   expect(response.headers()['x-request-id']).toMatch(
     /^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/,
   );
+  expect(response.headers()['x-service-name']).toBe(expectedServiceName);
   expect(await response.text()).toBe('');
 });
 
