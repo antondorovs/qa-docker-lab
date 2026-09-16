@@ -39,7 +39,7 @@ const server = http.createServer((request, response) => {
     'X-Request-Id': randomUUID(),
     'X-Service-Name': serviceName,
   });
-  response.end(isHeadRequest || isOptionsRequest ? undefined : responseBody);
+  response.end(isHeadRequest || statusCode === 204 ? undefined : responseBody);
 });
 
 server.listen(port, '0.0.0.0', () => {

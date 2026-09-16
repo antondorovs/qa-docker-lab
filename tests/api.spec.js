@@ -75,6 +75,17 @@ test('advertises supported methods with OPTIONS', async ({ request }) => {
   expect(await response.text()).toBe('');
 });
 
+test('returns a JSON 404 for OPTIONS on an unknown route', async ({ request }) => {
+  const response = await request.fetch('/missing', { method: 'OPTIONS' });
+  const expectedPayload = {
+    error: 'Not found',
+  };
+
+  expectJsonResponse(response, 404, expectedPayload);
+  expect(response.headers().allow).toBe('GET, HEAD, OPTIONS');
+  expect(await response.json()).toEqual(expectedPayload);
+});
+
 test('assigns a unique ID to each request', async ({ request }) => {
   const firstResponse = await request.get('/health');
   const secondResponse = await request.get('/health');
