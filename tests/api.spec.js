@@ -12,6 +12,7 @@ function expectJsonResponse(response, status, expectedPayload) {
   expect(response.headers()['referrer-policy']).toBe('no-referrer');
   expect(response.headers()['x-frame-options']).toBe('DENY');
   expect(response.headers()['x-content-type-options']).toBe('nosniff');
+  expect(response.headers()['x-api-version']).toBe('1');
   expect(response.headers()['x-request-id']).toMatch(
     /^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/,
   );
@@ -68,6 +69,7 @@ test('advertises supported methods with OPTIONS', async ({ request }) => {
   expect(response.headers()['referrer-policy']).toBe('no-referrer');
   expect(response.headers()['x-frame-options']).toBe('DENY');
   expect(response.headers()['x-content-type-options']).toBe('nosniff');
+  expect(response.headers()['x-api-version']).toBe('1');
   expect(response.headers()['x-request-id']).toMatch(
     /^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/,
   );

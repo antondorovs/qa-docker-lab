@@ -3,6 +3,7 @@ const http = require('node:http');
 
 const port = Number(process.env.PORT || 3000);
 const serviceName = process.env.SERVICE_NAME || 'demo-api';
+const apiVersion = '1';
 
 const routes = {
   '/health': {
@@ -36,6 +37,7 @@ const server = http.createServer((request, response) => {
     'Referrer-Policy': 'no-referrer',
     'X-Frame-Options': 'DENY',
     'X-Content-Type-Options': 'nosniff',
+    'X-Api-Version': apiVersion,
     'X-Request-Id': randomUUID(),
     'X-Service-Name': serviceName,
   });

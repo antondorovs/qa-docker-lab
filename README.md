@@ -7,7 +7,7 @@ The first example starts:
 
 - a small Node.js API container;
 - a Playwright test container;
-- seven API checks against the service over the Compose network.
+- eight API checks against the service over the Compose network.
 
 ## Prerequisites
 
@@ -137,6 +137,9 @@ requests easy to correlate with diagnostics.
 
 Every response also includes `X-Service-Name`, which keeps test output and
 manual checks tied to the configured API service name.
+
+Every response declares `X-Api-Version: 1`, giving contract checks a stable
+version marker without changing the JSON payload.
 
 The sample API accepts `GET`, `HEAD`, and `OPTIONS` requests. A `HEAD` response
 has the same headers as `GET`, without a response body. `OPTIONS` returns `204`
