@@ -42,6 +42,20 @@ test('returns a known test user', async ({ request }) => {
   expect(await response.json()).toEqual(expectedPayload);
 });
 
+test('returns the sample users list', async ({ request }) => {
+  const response = await request.get('/users');
+  const expectedPayload = [
+    {
+      id: 1,
+      name: 'Ada Lovelace',
+      role: 'QA Engineer',
+    },
+  ];
+
+  expectJsonResponse(response, 200, expectedPayload);
+  expect(await response.json()).toEqual(expectedPayload);
+});
+
 test('supports HEAD without returning a response body', async ({ request }) => {
   const getResponse = await request.get('/health');
   const headResponse = await request.head('/health');

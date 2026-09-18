@@ -5,16 +5,19 @@ const port = Number(process.env.PORT || 3000);
 const serviceName = process.env.SERVICE_NAME || 'demo-api';
 const apiVersion = '1';
 
+const sampleUser = {
+  id: 1,
+  name: 'Ada Lovelace',
+  role: 'QA Engineer',
+};
+
 const routes = {
   '/health': {
     status: 'ok',
     service: serviceName,
   },
-  '/users/1': {
-    id: 1,
-    name: 'Ada Lovelace',
-    role: 'QA Engineer',
-  },
+  '/users': [sampleUser],
+  '/users/1': sampleUser,
 };
 
 const server = http.createServer((request, response) => {
